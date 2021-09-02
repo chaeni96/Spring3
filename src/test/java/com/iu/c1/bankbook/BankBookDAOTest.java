@@ -14,6 +14,8 @@ public class BankBookDAOTest extends MyJunitTest{
 	@Autowired
 	private BankBookDAO bankBookDAO;
 	
+	
+	
 	//@Test
 	public void getSelectTest() {
 		BankBookDTO bankBookDTO = new BankBookDTO();
@@ -30,7 +32,7 @@ public class BankBookDAOTest extends MyJunitTest{
 		assertNotEquals(0, ar.size());	
 	}
 	
-	@Test
+	//@Test
 	public void setInsertTest() {
 		
 		BankBookDTO bankBookDTO = new BankBookDTO();
@@ -38,7 +40,15 @@ public class BankBookDAOTest extends MyJunitTest{
 		bankBookDTO.setBookRate(3.35);
 		bankBookDTO.setBookSale(1);
 		int result = bankBookDAO.setInsert(bankBookDTO);
+		assertEquals(1, result);	
+	}
+	
+	@Test
+	public void setDeleteTest() {
+		
+		int result = bankBookDAO.setDelete(29L);
 		assertEquals(1, result);
 		
 	}
+	
 }

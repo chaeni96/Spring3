@@ -14,6 +14,7 @@ public class BankBookDAO {
 	private final String NAMESPACE="com.iu.c1.bankbook.BankBookDAO.";
 	
 	public int setInsert(BankBookDTO bankBookDTO) {
+	
 		 return sqlSession.insert(NAMESPACE+"setInsert", bankBookDTO);
 	}
 	
@@ -27,7 +28,9 @@ public class BankBookDAO {
 		return sqlSession.selectOne(NAMESPACE+"getSelect", bankBookDTO);
 	}
 	
-	
+	public int setDelete(Long bookNumber) {
+		return sqlSession.delete(NAMESPACE+"setDelete", bookNumber);
+	}
 	
 	
 }
