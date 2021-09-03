@@ -5,8 +5,14 @@
   
   <mapper namespace="com.iu.c1.bankbook.BankBookDAO">
   
-  	<select id="getList" resultType="com.iu.c1.bankbook.BankBookDTO">
-  		SELECT * FROM BANKBOOK
+  	<select id="getList" resultType="com.iu.c1.bankbook.BankBookDTO" parameterType="com.iu.c1.util.Pager" >
+  	  SELECT * FROM
+   		(SELECT ROWNUM R, BK.* FROM
+   		 (SELECT * FROM BANKBOOK 
+    		ORDER BY BOOKNUMBER DESC) 
+    		BK)
+   	 WHERE R BETWEEN #{startRow} AND #{lastRow} 
+  
   	</select>
   
 	<select id="getSelect" parameterType="com.iu.c1.bankbook.BankBookDTO" resultType="com.iu.c1.bankbook.BankBookDTO">
@@ -21,4 +27,11 @@
 	<delete id="setDelete" parameterType="java.lang.Long">
 		DELETE  BANKBOOK WHERE BOOKNUMBER= #{bookNumber}
 	</delete>
+	
+	<update id="setUpdate" parameterType="com.iu.c1.bankbook.BankBookDTO">
+		UPDATE BANKBOOK SET BOOKNAME=#{bookName}, BOOKRATE=#{bookRate}, BOOKSALE=#{bookSale} 
+		WHERE BOOKNUMBER=#{bookNumber}
+	
+	</update>
+	
   </mapper>
