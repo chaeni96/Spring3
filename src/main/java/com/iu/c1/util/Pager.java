@@ -2,6 +2,9 @@ package com.iu.c1.util;
 
 public class Pager {
 
+	private String kind;
+	private String search;
+	
 	private Long pn;
 	private Long perPage;
 	private Long startRow;
@@ -9,6 +12,8 @@ public class Pager {
 	private Long startNum;
 	private Long lastNum;
 
+	private Long totalPage;
+	
 	public void makeRow() {
 		this.startRow = (this.getPn()-1)*this.getPerPage()+1;
 		this.lastRow = this.getPn()*this.getPerPage();
@@ -23,12 +28,12 @@ public class Pager {
 		return perPage;
 	}
 	
-	public void makeNum() {
+	public void makeNum(Long totalCount) {
 		//1. 총 개수
-		Long totalCount = 211L;
+		//Long totalCount = 211L;
 		
-		//2. 페이지 개수 구하기  ex)10
-		Long totalPage = totalCount/this.getPerPage();
+		//2. 페이지 개수 구하기  
+		totalPage = totalCount/this.getPerPage();
 		if(totalCount%this.getPerPage() !=0) {
 			//totalPage = totalPage+1;
 			totalPage++;
@@ -40,6 +45,11 @@ public class Pager {
 			}
 			
 		//4. pn으로 curBlock 구하기
+			
+			if(totalPage< this.getPn()) {
+				this.setPn(totalPage);
+			}
+			
 			Long curBlock = this.getPn()/5;
 			if(this.getPn()%5 !=0) {
 				curBlock++;
@@ -50,9 +60,33 @@ public class Pager {
 			this.startNum=(curBlock-1)*5+1;
 			this.lastNum = curBlock*5;
 			
+			if(curBlock == totalBlock) {
+				this.lastNum = totalPage;
+			}
+			
 		}
 	}
 	
+	
+	public String getKind() {
+		return kind;
+	}
+
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
+
+	public String getSearch() {
+		if(this.search == null) {
+			this.search = "";
+		}
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+
 	public Long getStartNum() {
 		return startNum;
 	}
@@ -99,6 +133,12 @@ public class Pager {
 	public void setLastRow(Long lastRow) {
 		this.lastRow = lastRow;
 	}
+
+	public Long getTotalPage() {
+		return totalPage;
+	}
+
+
 	
 	
 }

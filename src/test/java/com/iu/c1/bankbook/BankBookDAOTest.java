@@ -28,13 +28,15 @@ public class BankBookDAOTest extends MyJunitTest{
 	}
 	
 	//@Test
-	public void getListTest(Pager pager) {
+	public void getListTest(Pager pager, Long totalCount) {
 		List<BankBookDTO> ar = bankBookDAO.getList(pager);
-
+		pager.setPn(1L);
+		pager.makeNum(211L);
+		pager.makeRow();
 		assertNotEquals(0, ar.size());	
 	}
 	
-	@Test
+	//@Test
 	public void setInsertTest() throws Exception{
 		Random random = new Random();
 		

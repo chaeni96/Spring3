@@ -25,8 +25,6 @@ public class BankbookController {
 	@RequestMapping("bankbookList")
 	public ModelAndView list(ModelAndView mv, Pager pager) {
 		
-		
-		
 		List<BankBookDTO> ar = bankBookService.getList(pager);
 		
 		mv.addObject("pager", pager);

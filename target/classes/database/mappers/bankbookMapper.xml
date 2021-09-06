@@ -5,13 +5,53 @@
   
   <mapper namespace="com.iu.c1.bankbook.BankBookDAO">
   
+  	<select id="getCount" parameterType="com.iu.c1.util.Pager" resultType="java.lang.Long">
+  		SELECT COUNT(BOOKNUMBER) FROM BANKBOOK
+  			WHERE
+   		 	
+   		 	<choose>
+   		 	 <when test="kind == 'num'">
+   		 	 	bookNumber 
+   		 	 </when>
+   		 	 
+   		 	 <when test="kind == 'name'">
+   		 	 	bookName
+   		 	 </when>
+   		 	 
+   		 	 <otherwise>bookRate</otherwise>
+   		 	 
+   		 	</choose>
+   		 	
+   		 
+   		 	LIKE '%' || #{search} || '%'
+    		
+  	</select>
+  
+  
   	<select id="getList" resultType="com.iu.c1.bankbook.BankBookDTO" parameterType="com.iu.c1.util.Pager" >
   	  SELECT * FROM
    		(SELECT ROWNUM R, BK.* FROM
    		 (SELECT * FROM BANKBOOK 
+   		 	WHERE
+   		 	
+   		 	<choose>
+   		 	 <when test="kind == 'num'">
+   		 	 	bookNumber 
+   		 	 </when>
+   		 	 
+   		 	 <when test="kind == 'name'">
+   		 	 	bookName
+   		 	 </when>
+   		 	 
+   		 	 <otherwise>bookRate</otherwise>
+   		 	 
+   		 	</choose>
+   		 	
+   		 
+   		 	LIKE '%' || #{search} || '%'
     		ORDER BY BOOKNUMBER DESC) 
     		BK)
-   	 WHERE R BETWEEN #{startRow} AND #{lastRow} 
+   		 WHERE R BETWEEN #{startRow} AND #{lastRow} 
   
   	</select>
   
